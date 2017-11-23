@@ -1,0 +1,13 @@
+
+port: 8080
+commands:
+ - name: date
+   cmd:
+   - date
+ - name: pwd
+   cmd:
+    - pwd
+ - name: wait
+   cmd :
+    - sleep
+    - 10
