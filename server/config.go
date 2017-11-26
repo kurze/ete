@@ -2,26 +2,34 @@ package main
 
 import (
 	"io/ioutil"
-	"gopkg.in/yaml.v2"
+	"strconv"
+
 	"github.com/pkg/errors"
+	"gopkg.in/yaml.v2"
 )
 
-type Config struct {
-	Port string //`yaml:"port"`
-	Commands []Command
+type config struct {
+	// log level available: "disable", "fatal", "error", "warn", "info", "debug"
+	LogLevel string
+	Port     uint16
+	Commands []command
 }
 
-type Command struct {
-	Name string //`yaml:"name"`
-	Cmd []string //`yaml:"cmd"`
+func (c *config) getListenAddress() string {
+	return ":" + strconv.FormatInt(int64(c.Port), 10)
 }
 
-func readConfig(path string) (*Config, error) {
+type command struct {
+	Name string
+	Cmd  []string
+}
+
+func readConfig(path string) (*config, error) {
 	fileContent, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, errors.Wrap(err, "ReadConfig/ReadFile")
 	}
-	var c Config
+	var c config
 	err = yaml.Unmarshal(fileContent, &c)
 	if err != nil {
 		return nil, errors.Wrap(err, "ReadConfig/Unmarshal")

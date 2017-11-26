@@ -1,13 +1,13 @@
 
 port: 8080
+loglevel: debug
 commands:
  - name: date
    cmd:
    - date
  - name: pwd
-   cmd:
-    - pwd
+   cmd: [pwd]
  - name: wait
-   cmd :
-    - sleep
-    - 10
+   cmd: [sleep, 10]
+ - name: gitStatus
+   cmd: [git, status]
