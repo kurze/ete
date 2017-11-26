@@ -20,8 +20,9 @@ func (c *config) getListenAddress() string {
 }
 
 type command struct {
-	Name string
-	Cmd  []string
+	Name  string
+	Cmd   []string
+	Stdin string
 }
 
 func readConfig(path string) (*config, error) {

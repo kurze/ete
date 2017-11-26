@@ -2,6 +2,7 @@ package main
 
 import (
 	"os/exec"
+	"strings"
 
 	"github.com/kataras/iris"
 )
@@ -13,7 +14,9 @@ func (s *server) getConfig(ctx iris.Context) {
 func (s *server) registerCommand(c command) {
 	s.HTTPServer.Get("/cmd/"+c.Name, func(ctx iris.Context) {
 
-		out, err := exec.Command(c.Cmd[0], c.Cmd[1:]...).CombinedOutput()
+		cmd := exec.Command(c.Cmd[0], c.Cmd[1:]...)
+		cmd.Stdin = strings.NewReader(c.Stdin)
+		out, err := cmd.CombinedOutput()
 
 		if err != nil {
 			s.Logger.Error("cmd run fail ", err)

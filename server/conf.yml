@@ -11,3 +11,6 @@ commands:
    cmd: [sleep, 10]
  - name: gitStatus
    cmd: [git, status]
+ - name: shTest
+   cmd: [/bin/sh]
+   stdin: sleep 2 && echo "Wait and See"
